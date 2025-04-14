@@ -2,15 +2,15 @@ package simStation;
 
 import mvc.*;
 
-public class StopCommand extends Command {
+public class PauseCommand extends Command {
 
-    public StopCommand(Model model) {
+    public PauseCommand(Model model) {
         super(model);
     }
 
     @Override
     public void execute() {
         World w = (World)model;
-        w.stopAgents();
+        w.pauseAgents();
     }
 }
