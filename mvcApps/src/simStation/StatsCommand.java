@@ -1,16 +1,16 @@
-package simStation;
-
+package simstation;
 import mvc.*;
-
-public class StatsCommand extends Command {
-
+public class StatsCommand extends Command{
     public StatsCommand(Model model) {
         super(model);
     }
 
-    @Override
+    protected String[] stats() {
+        Simulation simulation = (Simulation)model;
+        return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock()};
+    }
+
     public void execute() {
-        World w = (World)model;
-        w.getStatus();
+        Utilities.inform(stats());
     }
 }

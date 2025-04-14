@@ -1,71 +1,145 @@
-package simStation;
+package simstation;
+
+import mvc.Utilities;
 
 import java.io.Serializable;
 
-public class Agent implements Serializable, Runnable {
-    protected int xc, yc;
-    protected boolean paused, stopped;
-    protected String agentName;
+public abstract class Agent implements Runnable, Serializable {
+    private String name;
+    protected Heading heading;
+    protected Simulation world;
+    public int xc, yc; // Made public
+    private boolean suspended = false;
+    private boolean stopped = false;
     transient protected Thread myThread;
-    protected World world;
-
+    public abstract void update();
+    public Agent(String name) {
+        this();
+        this.name = name;
+    }
     public Agent() {
-        this.xc = (int)(Math.random() * World.SIZE);
-        this.yc = (int)(Math.random() * World.SIZE);
-        this.paused = false;
-        this.stopped = false;
-        this.agentName = "Agent";
-        this.myThread = null;
+        super();
+        suspended = false;
+        stopped = false;
+        myThread = null;
     }
-
-    // Basic constructors
-    public int getX() { return xc;}
-    public int getY() { return yc;}
-    public void setX(int x) { xc = x; }
-    public void setY(int y) { yc = y; }
-    public void setName(String name) { this.agentName = name; }
-    public String getName() { return agentName; }
-    public void setWorld(World world) { this.world = world;}
-    
-    // Methods to be overridden in implementations of simStation
-    public void update() {}
-    public void onStart() {}
-    public void onInterrupted() {}
-    public void onExit() {}
-
-    // Synchronized methods
-    public synchronized boolean isPaused() { return paused; }
-    public synchronized boolean isStopped() {return stopped; }
-    public synchronized void pause() { paused = true; }
-    public synchronized void stop () { stopped = true; }
-    public synchronized void resume() { notify(); } // wakes up the agent and the while-loop in run() will set paused to false
-    
-    public synchronized void start() {
-        if (myThread == null) { 
-        // the if-statement prevents multiple threads from being created even if start() is accidentally called more than once
-            myThread = new Thread(this);
-            myThread.start();
-        }
-    }
-    
     public void run() {
+        myThread = Thread.currentThread();
+        suspended();
         onStart();
         while (!stopped) {
             try {
                 update();
                 Thread.sleep(20);
-                synchronized (this) { // check if paused, wait until stopped or resumed
-                    while (!stopped && paused) {
-                        wait();
-                        paused = false; // as soon as it wakes up, it's no longer suspended
-                    }
-                }
+                suspended();
             } catch (InterruptedException e) {
-                onInterrupted();
+                Utilities.error(e);
             }
         }
         onExit();
     }
 
-    
+
+    public synchronized void start() {
+        stopped = false;
+        suspended = false;
+        //world.populate();
+        myThread = new Thread(this);
+        myThread.start();
+    }
+    public synchronized void stop() {
+        stopped = true;
+        //myThread.interrupt();
+    }
+    public synchronized void suspend() {
+        suspended = true;
+    }
+    public synchronized void resume() {
+        notify();
+    }
+//    public void move(int steps) {
+//        switch (heading) {
+//            case NORTH:
+//                yc -= steps;
+//                break;
+//            case SOUTH:
+//                yc += steps;
+//                break;
+//            case EAST:
+//                xc += steps;
+//                break;
+//            case WEST:
+//                xc -= steps;
+//                break;
+//        }
+//        world.changed();
+//    }
+    // Updated move() method so that it is within world.SIZE border
+    public void move(int steps) {
+    int offset = 3; // half of agent size, rounded up
+    switch (heading) {
+        case NORTH:
+            yc = ((yc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
+            break;
+        case SOUTH:
+            yc = ((yc + steps + offset) % Simulation.SIZE) - offset;
+            break;
+        case EAST:
+            xc = ((xc + steps + offset) % Simulation.SIZE) - offset;
+            break;
+        case WEST:
+            xc = ((xc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
+            break;
+    }
+    world.changed();
+}
+
+    public synchronized void suspended() {
+        try {
+            while (!stopped && suspended) {
+                onInterrupted();
+                wait();
+                suspended = false;
+            }
+        } catch (InterruptedException e) {
+            Utilities.error(e);
+        }
+    }
+    public void setHeading(Heading heading) {
+        this.heading = heading;
+    }
+    public void setXc(int xc) {
+        this.xc = xc;
+    }
+    public void setYc(int yc) {
+        this.yc = yc;
+    }
+    public void setSimulation(Simulation world) {
+        this.world = world;
+    }
+    public Heading getHeading() {
+        return heading;
+    }
+    public int getXc() {
+        return this.xc;
+    }
+    public int getYc() {
+        return this.yc;
+    }
+    // Pythagorean theorem to calculate distance between two agents
+    public double distance(Agent other) {
+        int deltaX = this.xc - other.xc;
+        int deltaY = this.yc - other.yc;
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+    // Empty methods to be called by run() but overridden by subclasses
+    public void onStart() {
+
+    }
+    public void onInterrupted() {
+
+    }
+    public void onExit() {
+
+    }
 }

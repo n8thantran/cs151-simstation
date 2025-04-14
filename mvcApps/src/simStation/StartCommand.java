@@ -1,16 +1,21 @@
-package simStation;
+package simstation;
 
-import mvc.*;
+import mvc.Command;
+import mvc.Model;
+import mvc.Utilities;
 
 public class StartCommand extends Command {
-
     public StartCommand(Model model) {
         super(model);
     }
 
-    @Override
     public void execute() {
-        World w = (World)model;
-        w.startAgents();
+        Simulation simulation = (Simulation)model;
+        if (simulation.running()) {
+            Utilities.inform("Simulation is already running. Stop the simulation first if you wish to make a new instance.");
+        }
+        else {
+            simulation.start();
+        }
     }
 }
