@@ -5,11 +5,10 @@ import simstation.*;
 
 public class PlagueSimulation extends Simulation {
     private static int VIRULENCE = 50; // % chance of infection 50
-    // private static int RESISTANCE = 2; // % chance of resisting infection 2
     private static int POPULATION = 50;
     public static int INFECTED;
-    public static int INFECTION_LENGTH = 50; // time until recovery
-    public static boolean FATAL = false;
+    private static int INFECTION_LENGTH = 50; // time until recovery
+    private static boolean FATAL = false;
     private static int INITIAL_INFECTED = 25;
     public static final int MAX_CHANCE = 100;
 
@@ -60,14 +59,19 @@ public class PlagueSimulation extends Simulation {
         INITIAL_INFECTED = percent;
     }
 
-    /* 
-    public static int getResistance() {
-        return RESISTANCE;
+    public static boolean getFatal() {
+        return FATAL;
     }
-    public static void setResistance(int resistance) {
-        RESISTANCE = resistance;
+    public static void setFatal(boolean fatal) {
+        FATAL = fatal;
     }
-    */
+
+    public static int getInfectionLength() {
+        return INFECTION_LENGTH;
+    }
+    public static void setInfectionLength(int length) {
+        INFECTION_LENGTH = length;
+    }
 
     public static void main(String[] args) {
         AppPanel panel = new PlaguePanel(new PlagueFactory());

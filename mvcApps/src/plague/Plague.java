@@ -42,17 +42,16 @@ public class Plague extends Agent{
     
     // Method to determine infection chance
     private boolean shouldInfect() {
-        int infectionChance = Utilities.rng.nextInt( PlagueSimulation.MAX_CHANCE);
+        int infectionChance = Utilities.rng.nextInt(PlagueSimulation.MAX_CHANCE);
         return infectionChance <  PlagueSimulation.getVirulence();
     }
 
     @Override
     public void update() {
-
         if (infected) {
             int totalTime = world.getClock() - timeInfected;
-            if (totalTime >= PlagueSimulation.INFECTION_LENGTH) {
-                if (PlagueSimulation.FATAL) {
+            if (totalTime >= PlagueSimulation.getInfectionLength()) {
+                if (PlagueSimulation.getFatal()) {
                     this.stop(); // host dies
                 } else {
                     infected = false;
@@ -64,7 +63,6 @@ public class Plague extends Agent{
         // Attempt to infect a nearby neighbor
         Plague neighbor = (Plague) world.getNeighbor(this, 10);
         if (neighbor != null) {
-            PlagueSimulation Pworld = (PlagueSimulation) world;
             this.infectNeighbor(this, neighbor);
         }
 

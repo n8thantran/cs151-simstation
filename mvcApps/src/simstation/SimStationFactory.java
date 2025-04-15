@@ -1,9 +1,5 @@
 package simstation;
 
-import mvc.AppFactory;
-import mvc.Command;
-import mvc.Model;
-import mvc.View;
 import mvc.*;
 
 public class SimStationFactory implements AppFactory {
@@ -25,7 +21,7 @@ public class SimStationFactory implements AppFactory {
     }
 
     public String about() {
-        return "Simstation: Prisoner's Dilemma \nNathan Tran, Donna Bui, Matilda Verdejo\n 2025";
+        return "Simstation: \nNathan Tran, Donna Bui, Matilda Verdejo\n 2025";
     }
 
     public String[] getEditCommands() {
