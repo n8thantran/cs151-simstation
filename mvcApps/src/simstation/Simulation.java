@@ -1,16 +1,17 @@
 package simstation;
 
+import java.util.*;
 import mvc.Model;
 import mvc.Utilities;
-
-import java.util.*;
 public class Simulation extends Model {
     protected final static int SIZE = 600;
     transient private Timer timer;
     private int clock;
+    private int alive;
     private List<Agent> agents;
     private boolean running;
     private boolean suspended;
+    private ObserverAgent observer;
 
     public Simulation() {
         super();
@@ -18,9 +19,12 @@ public class Simulation extends Model {
         suspended = false;
         agents = new LinkedList<Agent>();
         clock = 0;
-
+        alive = 0;
+        this.observer = new ObserverAgent("Observer");
+        addAgent(observer);
     }
 
+    /*
     public void startTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new ClockUpdater(), 1000, 1000);
@@ -29,10 +33,11 @@ public class Simulation extends Model {
         timer.cancel();
         timer.purge();
     }
+    */
 
     public void start() {
         clock = 0;
-        startTimer();
+        //startTimer();
         agents.clear();
         populate();
         for (Agent a : agents) {
@@ -41,11 +46,10 @@ public class Simulation extends Model {
         running = true;
         suspended = false;
         changed();
-        System.out.println(this.agents.size());
     }
 
     public void suspend() {
-        stopTimer();
+        //stopTimer();
         for (Agent a : agents) {
             a.suspend();
         }
@@ -54,7 +58,7 @@ public class Simulation extends Model {
     }
 
     public void resume() {
-        startTimer();
+        //startTimer();
         for (Agent a : agents) {
             a.resume();
         }
@@ -63,7 +67,7 @@ public class Simulation extends Model {
     }
 
     public void stop() {
-        stopTimer();
+        //stopTimer();
         for (Agent a : agents) {
             a.stop();
         }
@@ -84,7 +88,7 @@ public class Simulation extends Model {
         int index = startIndex;
         while (true) {
             Agent neighbor = agents.get(index);
-            if (a.distance(neighbor) < radius && !a.equals(neighbor)) {
+            if (a.distance(neighbor) < radius && !a.equals(neighbor) && !(a instanceof ObserverAgent)) {
                 return neighbor;
             }
             index = (index + 1) % agents.size(); //wrap around
@@ -104,6 +108,7 @@ public class Simulation extends Model {
         return agents;
     }
 
+    /* 
     public Timer getTimer() {
         return timer;
     }
@@ -111,6 +116,7 @@ public class Simulation extends Model {
     public void setTimer(Timer timer) {
         this.timer = timer;
     }
+    */
 
     public int getClock() {
         return clock;
@@ -120,13 +126,19 @@ public class Simulation extends Model {
         this.clock = clock;
     }
 
+    public int getAlive() {
+        return alive;
+    }
+
     public void setAgents(ArrayList<Agent> agents) {
         this.agents = agents;
     }
 
+    /* 
     public int getAgentsSize() {
         return agents.size();
     }
+    */
 
     public boolean running() {
         return running;
@@ -136,11 +148,21 @@ public class Simulation extends Model {
         return suspended;
     }
 
+    /* 
     private class ClockUpdater extends TimerTask {
         @Override
         public void run() {
             clock++;
         }
     }
+    */
 
+     public void updateStatistics() {
+        clock++;
+        for (Agent a : agents) {
+            if (!(a instanceof ObserverAgent) && !a.isStopped()) {
+                alive++;
+            }
+        }
+     }
 }

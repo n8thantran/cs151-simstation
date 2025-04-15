@@ -1,10 +1,9 @@
 package prisoner;
 
 import mvc.Utilities;
-import simstation.Agent;
-import simstation.Heading;
+import simstation.*;
 
-public class Prisoner extends Agent {
+public class Prisoner extends MobileAgent {
     private int fitness;
     private boolean partnerCheated;
     private Strategy strategy;
@@ -49,7 +48,7 @@ public class Prisoner extends Agent {
 
     @Override
     public void update() {
-        this.heading = Heading.random();
+        this.turn(Heading.random());
         int steps = Utilities.rng.nextInt(STEP) + 1;
         move(steps);
         Prisoner partner = (Prisoner) world.getNeighbor(this, SEARCH_RADIUS);

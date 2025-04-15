@@ -15,13 +15,15 @@ public class PlagueView extends SimulationView {
         int offset = AGENT_SIZE / 2;
         g.setColor(Color.WHITE);
         for (Agent a : simulation.getAgents()) {
-            Plague p = (Plague) a;
-            if (p.isInfected()) {
-                g.setColor(Color.RED);
-            } else {
-                g.setColor(Color.GREEN);
+            if (!(a instanceof ObserverAgent)) {
+                Plague p = (Plague) a;
+                if (p.isInfected()) {
+                    g.setColor(Color.RED);
+                } else {
+                    g.setColor(Color.GREEN);
+                }
+                g.fillOval(p.getXc() - offset, p.getYc() - offset, AGENT_SIZE, AGENT_SIZE);
             }
-            g.fillOval(p.getXc() - offset, p.getYc() - offset, AGENT_SIZE, AGENT_SIZE);
         }
     }
 }

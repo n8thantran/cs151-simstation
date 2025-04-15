@@ -1,17 +1,17 @@
 package randomwalk;
 import mvc.Utilities;
-import simstation.Agent;
-import simstation.Heading;
+import simstation.*;
 
-public class Drunk extends Agent {
+public class Drunk extends MobileAgent {
 
     public Drunk() {
         super();
         heading = Heading.random();
     }
 
+    @Override
     public void update() {
-        heading = Heading.random();
+        this.turn(Heading.random());
         int steps = Utilities.rng.nextInt(10) + 1;
         move(steps);
     }

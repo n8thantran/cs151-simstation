@@ -4,6 +4,8 @@ import mvc.*;
 import simstation.*;
 
 public class RandomWalkSimulation extends Simulation {
+
+    @Override
     public void populate() {
         for(int i = 0; i < 15; i++)
             addAgent(new Drunk());

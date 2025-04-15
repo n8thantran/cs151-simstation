@@ -5,7 +5,7 @@ import mvc.Utilities;
 
 public abstract class Agent implements Runnable, Serializable {
     private String name;
-    protected Heading heading;
+    // protected Heading heading;
     protected Simulation world;
     public int xc, yc; // Made public
     private boolean suspended = false;
@@ -21,7 +21,10 @@ public abstract class Agent implements Runnable, Serializable {
         suspended = false;
         stopped = false;
         myThread = null;
+        name = "StaticAgent";
     }
+
+    @Override
     public void run() {
         myThread = Thread.currentThread();
         suspended();
@@ -37,7 +40,6 @@ public abstract class Agent implements Runnable, Serializable {
         }
         onExit();
     }
-
 
     public synchronized void start() {
         stopped = false;
@@ -57,26 +59,6 @@ public abstract class Agent implements Runnable, Serializable {
         notify();
     }
 
-    // Updated move() method so that it is within world.SIZE border
-    public void move(int steps) {
-    int offset = 3; // half of agent size, rounded up
-    switch (heading) {
-        case NORTH:
-            yc = ((yc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
-            break;
-        case SOUTH:
-            yc = ((yc + steps + offset) % Simulation.SIZE) - offset;
-            break;
-        case EAST:
-            xc = ((xc + steps + offset) % Simulation.SIZE) - offset;
-            break;
-        case WEST:
-            xc = ((xc - steps + offset + Simulation.SIZE) % Simulation.SIZE) - offset;
-            break;
-    }
-    world.changed();
-}
-
     public synchronized void suspended() {
         try {
             while (!stopped && suspended) {
@@ -88,9 +70,7 @@ public abstract class Agent implements Runnable, Serializable {
             Utilities.error(e);
         }
     }
-    public void setHeading(Heading heading) {
-        this.heading = heading;
-    }
+    
     public void setXc(int xc) {
         this.xc = xc;
     }
@@ -100,20 +80,26 @@ public abstract class Agent implements Runnable, Serializable {
     public void setSimulation(Simulation world) {
         this.world = world;
     }
-    public Heading getHeading() {
-        return heading;
-    }
     public int getXc() {
         return this.xc;
     }
     public int getYc() {
         return this.yc;
     }
+    public String getName() {
+        return this.name;
+    }
     // Pythagorean theorem to calculate distance between two agents
     public double distance(Agent other) {
         int deltaX = this.xc - other.xc;
         int deltaY = this.yc - other.yc;
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+    }
+    public synchronized boolean isStopped() {
+        return stopped;
+    }
+    public synchronized boolean isSuspended() {
+        return stopped;
     }
     // Empty methods to be called by run() but overridden by subclasses
     public void onStart() {
@@ -125,4 +111,5 @@ public abstract class Agent implements Runnable, Serializable {
     public void onExit() {
 
     }
+
 }

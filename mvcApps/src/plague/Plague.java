@@ -1,10 +1,8 @@
 package plague;
 
 import mvc.Utilities;
-import simstation.Agent;
-import simstation.Heading;
-
-public class Plague extends Agent{
+import simstation.*;
+public class Plague extends MobileAgent{
     private boolean infected;
     private int timeInfected;
     
@@ -67,7 +65,7 @@ public class Plague extends Agent{
         }
 
         // Move randomly
-        this.heading = Heading.random();
+        this.turn(Heading.random());
         int steps = Utilities.rng.nextInt(10) + 1;
         move(steps);
     }

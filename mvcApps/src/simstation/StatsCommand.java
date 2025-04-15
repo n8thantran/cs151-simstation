@@ -7,7 +7,8 @@ public class StatsCommand extends Command{
 
     protected String[] stats() {
         Simulation simulation = (Simulation)model;
-        return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock()};
+        System.out.println(simulation.getAlive());
+        return new String[]{"alive agents = " + simulation.getAlive(), "clock = " + simulation.getClock()};
     }
 
     public void execute() {

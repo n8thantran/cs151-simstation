@@ -44,7 +44,7 @@ public class PlagueFactory extends SimStationFactory {
             //String[] defaultStats = super.stats();
             PlagueSimulation simulation = (PlagueSimulation) model;
             String infectPop = simulation.stats();
-            return new String[]{"agents = " + simulation.getAgentsSize(), "clock = " + simulation.getClock(), infectPop};
+            return new String[]{"alive agents = " + simulation.getAlive(), "clock = " + simulation.getClock(), infectPop};
         }
     }
 
