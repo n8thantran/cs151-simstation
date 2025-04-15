@@ -6,6 +6,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PrisonerSim",
+            "request": "launch",
+            "mainClass": "prisoner.PrisonerSim",
+            "projectName": "cs151-simstation_d555820f"
+        },
+        {
+            "type": "java",
+            "name": "PlagueSimulation",
+            "request": "launch",
+            "mainClass": "plague.PlagueSimulation",
+            "projectName": "cs151-simstation_d555820f"
+        },
+        {
+            "type": "java",
+            "name": "FlockingSimulation",
+            "request": "launch",
+            "mainClass": "flocking.FlockingSimulation",
+            "projectName": "cs151-simstation_d555820f"
+        },
+        {
+            "type": "java",
+            "name": "RandomWalkSimulation",
+            "request": "launch",
+            "mainClass": "randomwalk.RandomWalkSimulation",
+            "projectName": "cs151-simstation_d555820f"
+        },
+        {
+            "type": "java",
             "name": "StoplightPanel",
             "request": "launch",
             "mainClass": "stopLight.StoplightPanel",
