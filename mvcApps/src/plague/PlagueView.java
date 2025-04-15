@@ -1,12 +1,8 @@
 package plague;
 
-import mvc.Model;
-import prisoner.Prisoner;
-import prisoner.PrisonerSim;
-import simstation.Agent;
-import simstation.SimulationView;
-
 import java.awt.*;
+import mvc.*;
+import simstation.*;
 
 public class PlagueView extends SimulationView {
     public PlagueView(Model m) {

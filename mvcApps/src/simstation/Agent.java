@@ -1,8 +1,7 @@
 package simstation;
 
-import mvc.Utilities;
-
 import java.io.Serializable;
+import mvc.Utilities;
 
 public abstract class Agent implements Runnable, Serializable {
     private String name;
@@ -57,23 +56,7 @@ public abstract class Agent implements Runnable, Serializable {
     public synchronized void resume() {
         notify();
     }
-//    public void move(int steps) {
-//        switch (heading) {
-//            case NORTH:
-//                yc -= steps;
-//                break;
-//            case SOUTH:
-//                yc += steps;
-//                break;
-//            case EAST:
-//                xc += steps;
-//                break;
-//            case WEST:
-//                xc -= steps;
-//                break;
-//        }
-//        world.changed();
-//    }
+
     // Updated move() method so that it is within world.SIZE border
     public void move(int steps) {
     int offset = 3; // half of agent size, rounded up

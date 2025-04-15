@@ -1,6 +1,7 @@
 package plague;
-import simstation.*;
+
 import mvc.*;
+import simstation.*;
 
 public class PlagueSimulation extends Simulation {
     private static int VIRULENCE = 50; // % chance of infection 50
@@ -49,8 +50,29 @@ public class PlagueSimulation extends Simulation {
         return "% infected: " + percentInf;
     }
 
+    public static int getPopulation() {
+        return POPULATION;
+    }
+    public static void setPopulation(int population) {
+        POPULATION = population;
+    }
+
+    public static int getVirulence() { // % chance of infection
+        return VIRULENCE;
+    }
+    public static void setVirulence(int virulence) {
+        VIRULENCE = virulence;
+    }
+
+    public static int getResistance() {
+        return RESISTANCE;
+    }
+    public static void setResistance(int resistance) {
+        RESISTANCE = resistance;
+    }
+
     public static void main(String[] args) {
-        AppPanel panel = new SimulationPanel(new PlagueFactory());
+        AppPanel panel = new PlaguePanel(new PlagueFactory());
         panel.display();
     }
 }

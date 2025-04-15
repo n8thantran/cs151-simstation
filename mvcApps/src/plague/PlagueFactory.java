@@ -1,7 +1,7 @@
 package plague;
-import mvc.AppFactory;
-import simstation.*;
+
 import mvc.*;
+import simstation.*;
 public class PlagueFactory extends SimStationFactory {
     @Override
     public Simulation makeModel() {
