@@ -13,7 +13,7 @@ public class PlagueFactory extends SimStationFactory {
     }
     @Override
     public String about() {
-        return "Simstation: Plague \nBrandon Nguyen, Charles Manaois, Hruday Prathipati\n 2024";
+        return "Simstation: Plague \nNathan Tran, Donna Bui, Matilda Verdejo\n 2025";
     }
     @Override
     public String[] getHelp() {
