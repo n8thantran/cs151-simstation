@@ -10,5 +10,33 @@ public class GreedView extends SimulationView {
         this.setBackground(Color.GRAY);
     }
 
-    //implement drawAgents method as shown in PlagueView
+    @Override
+    protected void drawAgents(Graphics g) {
+        Meadow meadow = (Meadow) model;
+        int size = Meadow.SIZE;
+        int patchSize = 10;
+
+        // Draw patches
+        for (Agent a : meadow.getAgents()) {
+            if (a instanceof Patch patch) {
+                int x = patch.getXc() * patchSize;
+                int y = patch.getYc() * patchSize;
+                int green = Math.min(255, (int) (255 * (patch.getEnergy() / 100.0)));
+
+                g.setColor(new Color(0, green, 0)); // Grass color based on energy level
+                g.fillRect(x, y, patchSize, patchSize);
+            }
+        }
+
+        // Draw cows
+        for (Agent a : meadow.getAgents()) {
+            if (a instanceof Cow cow) {
+                int x = cow.getXc() * patchSize;
+                int y = cow.getYc() * patchSize;
+
+                g.setColor(cow.getEnergy() > 0 ? Color.BLACK : Color.WHITE); // Living cows are black, dead cows are white
+                g.fillOval(x + patchSize / 4, y + patchSize / 4, patchSize / 2, patchSize / 2);
+            }
+        }
+    }
 }

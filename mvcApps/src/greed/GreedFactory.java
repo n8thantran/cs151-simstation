@@ -1,7 +1,7 @@
 package greed;
 
-import mvc.*;
 import simstation.*;
+import mvc.*;
 
 public class GreedFactory extends SimStationFactory {
 
@@ -20,7 +20,6 @@ public class GreedFactory extends SimStationFactory {
         return "Simstation: Greed \nNathan Tran, Donna Bui, Matilda Verdejo\n 2025";
     }
 
-    //what does stats return?
     @Override
     public String[] getHelp() {
         return new String[] {
@@ -28,7 +27,7 @@ public class GreedFactory extends SimStationFactory {
                 "Press Pause to pause the simulation while its running.",
                 "Press Resume to resume the simulation after its been paused.",
                 "Press Stop to stop the simulation.",
-                "Press Stats to view the statistics of the simulation, returns idk???"
+                "Press Stats to view the statistics of the simulation, returns number of alive cows"
         };
     }
 
@@ -37,7 +36,14 @@ public class GreedFactory extends SimStationFactory {
         return "Greed";
     }
 
-    //finish up buttons/commands on here
-
-
+    public Command[] getCommands() {
+        Simulation model = makeModel();
+        return new Command[] {
+                new StartCommand(model),
+                new SuspendCommand(model),
+                new ResumeCommand(model),
+                new StopCommand(model),
+                new StatsCommand(model)
+        };
+    }
 }
