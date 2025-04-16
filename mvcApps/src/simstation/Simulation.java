@@ -21,7 +21,6 @@ public class Simulation extends Model {
         clock = 0;
         alive = 0;
         this.observer = new ObserverAgent("Observer");
-        addAgent(observer);
     }
 
     /*
@@ -39,6 +38,7 @@ public class Simulation extends Model {
         clock = 0;
         //startTimer();
         agents.clear();
+        addAgent(observer);
         populate();
         for (Agent a : agents) {
             a.start();
@@ -88,9 +88,9 @@ public class Simulation extends Model {
         int index = startIndex;
         while (true) {
             Agent neighbor = agents.get(index);
-            if (a.distance(neighbor) < radius && !a.equals(neighbor) && !(a instanceof ObserverAgent)) {
+            if (a.distance(neighbor) < radius && !a.equals(neighbor) && !(neighbor instanceof ObserverAgent)) {
                 return neighbor;
-            }
+            }            
             index = (index + 1) % agents.size(); //wrap around
             if (index == startIndex) {
                 break;
@@ -119,7 +119,8 @@ public class Simulation extends Model {
     */
 
     public int getClock() {
-        return clock;
+        return clock / 50; // Divide by 50 to get clock in seconds 
+        // Use 1000 divided by time used in sleep()
     }
 
     public void setClock(int clock) {
@@ -158,7 +159,8 @@ public class Simulation extends Model {
     */
 
      public void updateStatistics() {
-        clock++;
+        clock++; // increments every 20 ticks or the time used in sleep()
+        alive = 0;
         for (Agent a : agents) {
             if (!(a instanceof ObserverAgent) && !a.isStopped()) {
                 alive++;

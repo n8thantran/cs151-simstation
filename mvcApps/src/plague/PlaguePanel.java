@@ -18,24 +18,24 @@ public class PlaguePanel extends SimulationPanel implements ChangeListener {
         sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
         sliderPanel.setBorder(BorderFactory.createEmptyBorder(25, 25, 25, 25));
 
-        populationSlider = new JSlider(JSlider.HORIZONTAL, 0, 200, PlagueSimulation.getPopulation());
-        populationSlider.setMajorTickSpacing(50);
+        populationSlider = new JSlider(JSlider.HORIZONTAL, 10, 250, PlagueSimulation.getPopulation());
+        populationSlider.setMajorTickSpacing(25);
         populationSlider.setMinorTickSpacing(10);
         populationSlider.setPaintTicks(true);
         populationSlider.setPaintLabels(true);
         populationSlider.setLabelTable(populationSlider.createStandardLabels(50));
         populationSlider.addChangeListener(this);
 
-        virulenceSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, PlagueSimulation.getVirulence());
-        virulenceSlider.setMajorTickSpacing(20);
+        virulenceSlider = new JSlider(JSlider.HORIZONTAL, 1, 100, PlagueSimulation.getVirulence());
+        virulenceSlider.setMajorTickSpacing(10);
         virulenceSlider.setMinorTickSpacing(5);
         virulenceSlider.setPaintTicks(true);
         virulenceSlider.setPaintLabels(true);
         virulenceSlider.setLabelTable(virulenceSlider.createStandardLabels(20));
         virulenceSlider.addChangeListener(this);
 
-        infectionLengthSlider = new JSlider(JSlider.HORIZONTAL, 10, 200, PlagueSimulation.getInfectionLength());
-        infectionLengthSlider.setMajorTickSpacing(30);
+        infectionLengthSlider = new JSlider(JSlider.HORIZONTAL, 1, 60, PlagueSimulation.getInfectionLength());
+        infectionLengthSlider.setMajorTickSpacing(10);
         infectionLengthSlider.setMinorTickSpacing(5);
         infectionLengthSlider.setPaintTicks(true);
         infectionLengthSlider.setPaintLabels(true);

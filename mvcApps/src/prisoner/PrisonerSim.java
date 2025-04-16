@@ -1,8 +1,8 @@
 package prisoner;
 
-import simstation.*;
-import mvc.*;
 import java.text.DecimalFormat;
+import mvc.*;
+import simstation.*;
 public class PrisonerSim extends Simulation {
     private static final int PRISONERS_PER_STRAT = 10;
 
@@ -13,7 +13,7 @@ public class PrisonerSim extends Simulation {
             }
         }
     }
-
+    
     public Prisoner createPrisoner(int strat) {
         Prisoner p = new Prisoner();
         switch (strat) {
@@ -41,21 +41,23 @@ public class PrisonerSim extends Simulation {
         double tit4tat = 0;
 
         for (Agent a : this.getAgents()) {
-            Prisoner p = (Prisoner) a;
-            double avgFitness = p.getFitness() / (double)PRISONERS_PER_STRAT;
-            switch (p.getStrategy().getType()) {
-                case COOPERATE:
-                    cooperate += avgFitness;
-                    break;
-                case RANDOMLY_COOPERATE:
-                    randomlyCooperate += avgFitness;
-                    break;
-                case CHEAT:
-                    cheat += avgFitness;
-                    break;
-                case TIT4TAT:
-                    tit4tat += avgFitness;
-                    break;
+                if (!(a instanceof ObserverAgent)) {
+                Prisoner p = (Prisoner) a;
+                double avgFitness = p.getFitness() / (double)PRISONERS_PER_STRAT;
+                switch (p.getStrategy().getType()) {
+                    case COOPERATE:
+                        cooperate += avgFitness;
+                        break;
+                    case RANDOMLY_COOPERATE:
+                        randomlyCooperate += avgFitness;
+                        break;
+                    case CHEAT:
+                        cheat += avgFitness;
+                        break;
+                    case TIT4TAT:
+                        tit4tat += avgFitness;
+                        break;
+                }
             }
         }
         DecimalFormat df = new DecimalFormat("#.##");

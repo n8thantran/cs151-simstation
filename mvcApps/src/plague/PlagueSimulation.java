@@ -5,11 +5,11 @@ import simstation.*;
 
 public class PlagueSimulation extends Simulation {
     private static int VIRULENCE = 50; // % chance of infection 50
-    private static int POPULATION = 50;
+    private static int POPULATION = 100;
     public static int INFECTED;
-    private static int INFECTION_LENGTH = 50; // time until recovery
+    private static int INFECTION_LENGTH = 25; // time until recovery/death
     private static boolean FATAL = false;
-    private static int INITIAL_INFECTED = 25;
+    private static int INITIAL_INFECTED = 50;
     public static final int MAX_CHANCE = 100;
 
     @Override
@@ -23,11 +23,13 @@ public class PlagueSimulation extends Simulation {
 
     public void infectAgents() {
         for (Agent agent : getAgents()) {
-            Plague a = (Plague) agent;
-            if (Utilities.rng.nextInt(MAX_CHANCE) < INITIAL_INFECTED) {
-                if (!a.isInfected()) {  // if not already infected
-                    a.setInfected(true);
-                    INFECTED++;
+            if (!(agent instanceof ObserverAgent)) {
+                Plague a = (Plague) agent;
+                if (Utilities.rng.nextInt(MAX_CHANCE) < INITIAL_INFECTED) {
+                    if (!a.isInfected()) {  // if not already infected
+                        a.setInfected(true);
+                        INFECTED++;
+                    }
                 }
             }
         }
