@@ -132,3 +132,9 @@ public class PlaguePanel extends SimulationPanel implements ChangeListener {
         
     }
 }
+
+
+
+
+
+
