@@ -1,6 +1,5 @@
 package greed;
 
-import mvc.*;
 import simstation.*;
 
 public class Patch extends Agent {
@@ -10,6 +9,22 @@ public class Patch extends Agent {
 
     public Patch() {
         super();
+    }
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int e) {
+        energy = Math.max(0, Math.min(100, e));
+    }
+
+    public int getPatchSize() {
+        return patchSize;
+    }
+
+    public void setPatchSize(int size) {
+        patchSize = size;
     }
 
     public synchronized boolean eatMe(Cow cow, int amt) {
@@ -39,21 +54,5 @@ public class Patch extends Agent {
             energy = Math.min(100, energy + growBackRate);
         }
         notifyAll();
-    }
-
-    public int getEnergy() {
-        return energy;
-    }
-
-    public void setEnergy(int e) {
-        energy = Math.max(0, Math.min(100, e));
-    }
-
-    public int getPatchSize() {
-        return patchSize;
-    }
-
-    public void setPatchSize(int size) {
-        patchSize = size;
     }
 }
