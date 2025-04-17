@@ -1,10 +1,11 @@
 package flocking;
 
-import simstation.*;
+import java.io.Serializable;
 import mvc.*;
+import simstation.*;
 
 
-public class FlockingFactory extends SimStationFactory {
+public class FlockingFactory extends SimStationFactory implements Serializable {
     @Override
     public Model makeModel() {
         return new FlockingSimulation();

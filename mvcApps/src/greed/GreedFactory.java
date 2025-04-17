@@ -1,10 +1,11 @@
 package greed;
 
+import java.io.Serializable;
 import javax.swing.JSlider;
 import mvc.*;
 import simstation.*;
 
-public class GreedFactory extends SimStationFactory {
+public class GreedFactory extends SimStationFactory implements Serializable {
     @Override
     public Simulation makeModel() {
         return new GreedSimulation();
@@ -88,7 +89,7 @@ public class GreedFactory extends SimStationFactory {
         protected String[] stats() {
             GreedSimulation simulation = (GreedSimulation) model;
             String aliveCows = simulation.getStats();
-            return new String[]{"Alive Cows: " + aliveCows, "Clock: " + simulation.getClock()};
+            return new String[]{aliveCows, "Clock: " + simulation.getClock()};
         }
     }
 

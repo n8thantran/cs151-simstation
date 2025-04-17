@@ -22,6 +22,8 @@ public abstract class Agent implements Runnable, Serializable {
         stopped = false;
         myThread = null;
         name = "StaticAgent";
+        xc = Utilities.rng.nextInt(Simulation.SIZE);
+        yc = Utilities.rng.nextInt(Simulation.SIZE);
     }
 
     @Override

@@ -13,7 +13,6 @@ public class GreedView extends SimulationView {
     @Override
     protected void drawAgents(Graphics g) {
         Meadow meadow = (Meadow) model;
-        int size = Meadow.SIZE;
         int patchSize = 10;
 
         for (Agent a : meadow.getAgents()) {
@@ -24,6 +23,9 @@ public class GreedView extends SimulationView {
 
                 g.setColor(new Color(0, green, 0));
                 g.fillRect(x, y, patchSize, patchSize);
+
+                g.setColor(Color.GRAY);
+                g.drawRect(x, y, patchSize - 1, patchSize - 1);
             }
         }
 
@@ -32,7 +34,7 @@ public class GreedView extends SimulationView {
                 int x = cow.getXc() * patchSize;
                 int y = cow.getYc() * patchSize;
 
-                g.setColor(cow.getEnergy() > 0 ? Color.BLACK : Color.WHITE);
+                g.setColor(cow.getEnergy() > 0 ? Color.RED : Color.WHITE);
                 g.fillOval(x + patchSize / 4, y + patchSize / 4, patchSize / 2, patchSize / 2);
             }
         }

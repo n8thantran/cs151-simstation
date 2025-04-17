@@ -5,7 +5,7 @@ import mvc.*;
 import simstation.*;
 
 public class Cow extends MobileAgent {
-    private int energy = 100;
+    private int energy = 500;
     private static int greediness = 25;
     private Color color = Color.RED;
 
@@ -80,7 +80,7 @@ public class Cow extends MobileAgent {
         int deltaX = Utilities.rng.nextInt(3) - 1;
         int deltaY = Utilities.rng.nextInt(3) - 1;
 
-        xc = Math.max(0, Math.min(xc + deltaX, ((Meadow) world).SIZE - 1));
-        yc = Math.max(0, Math.min(yc + deltaY, ((Meadow) world).SIZE - 1));
+        xc = Math.max(0, Math.min(xc + deltaX, ((Meadow)world).getDim() - 1));
+        yc = Math.max(0, Math.min(yc + deltaY, ((Meadow)world).getDim() - 1));
     }
 }

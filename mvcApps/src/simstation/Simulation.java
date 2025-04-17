@@ -77,8 +77,6 @@ public class Simulation extends Model {
     }
 
     public void addAgent(Agent ag) {
-        ag.xc = Utilities.rng.nextInt(SIZE);
-        ag.yc = Utilities.rng.nextInt(SIZE);
         agents.add(ag);
         ag.setSimulation(this);
     }

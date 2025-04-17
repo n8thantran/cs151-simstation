@@ -1,10 +1,11 @@
 package prisoner;
 
-import simstation.SimStationFactory;
+import java.io.Serializable;
 import mvc.*;
-import simstation.StatsCommand;
+import simstation.*;
 
-public class PrisonerFactory extends SimStationFactory {
+
+public class PrisonerFactory extends SimStationFactory implements Serializable {
     public PrisonerFactory() {
         super();
     }

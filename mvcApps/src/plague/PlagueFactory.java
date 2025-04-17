@@ -1,9 +1,10 @@
 package plague;
 
+import java.io.Serializable;
 import javax.swing.JSlider;
 import mvc.*;
 import simstation.*;
-public class PlagueFactory extends SimStationFactory {
+public class PlagueFactory extends SimStationFactory implements Serializable {
     @Override
     public Simulation makeModel() {
         return new PlagueSimulation();
