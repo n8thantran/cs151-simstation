@@ -1,8 +1,7 @@
 package greed;
 
-import mvc.*;
-import simstation.*;
 import javax.swing.SwingUtilities;
+import mvc.*;
 
 public class GreedSimulation extends Meadow {
     private int greediness = 25;
@@ -16,13 +15,6 @@ public class GreedSimulation extends Meadow {
     public void setGreed(int value) {
         greediness = value;
     }
-    public synchronized String getStats() {
-        long alive = getAgents().stream()
-                .filter(a -> a instanceof Cow && ((Cow) a).getEnergy() > 0)
-                .count();
-        return "Alive Cows: " + alive;
-    }
-
 
     @Override
     public int getGrowBackRate() {
@@ -42,6 +34,13 @@ public class GreedSimulation extends Meadow {
     @Override
     public void setMoveEnergy(int energy) {
         moveEnergy = energy;
+    }
+
+    public synchronized String getStats() {
+        long alive = getAgents().stream()
+                .filter(a -> a instanceof Cow && ((Cow) a).getEnergy() > 0)
+                .count();
+        return "Alive Cows: " + alive;
     }
 
     public static void main(String[] args) {

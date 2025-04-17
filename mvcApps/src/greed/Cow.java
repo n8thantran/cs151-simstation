@@ -1,9 +1,8 @@
 package greed;
 
-import simstation.*;
-import mvc.*;
 import java.awt.*;
-import java.awt.color.*;
+import mvc.*;
+import simstation.*;
 
 public class Cow extends MobileAgent {
     private int energy = 100;
@@ -14,23 +13,30 @@ public class Cow extends MobileAgent {
         super();
     }
 
-    public void setColor(Color c) {
-        this.color = c;
+    public int getGreed() {
+        return greediness;
+    }
+
+    public int getEnergy() {
+        return energy;
     }
 
     public Color getColor() {
         return color;
     }
 
+    public void setColor(Color c) {
+        this.color = c;
+    }
+
     public void update() {
-        // Cow is already dead
         if (energy <= 0) {
             return;
         }
 
         Patch patch = ((Meadow) world).getPatch(xc, yc);
         if (patch == null) {
-            move();  // Move if no valid patch exists
+            move();
             return;
         }
         boolean ate = patch.eatMe(this, greediness);
@@ -54,21 +60,14 @@ public class Cow extends MobileAgent {
         }
     }
 
-    public int getGreed() {
-        return greediness;
-    }
-
     public void reduceEnergy(int amount) {
         energy -= amount;
     }
 
-    public int getEnergy() {
-        return energy;
-    }
 
     public void passAway() {
         energy = 0;
-        setColor(Color.WHITE); // Cow's color changes to white when it dies.
+        setColor(Color.WHITE);
         stop();
     }
 
@@ -78,11 +77,9 @@ public class Cow extends MobileAgent {
     }
 
     public void move() {
-        // Generate a random move direction: -1, 0, or 1 for both x and y
         int deltaX = Utilities.rng.nextInt(3) - 1;
         int deltaY = Utilities.rng.nextInt(3) - 1;
 
-        // Update the cow's position (keeping within bounds)
         xc = Math.max(0, Math.min(xc + deltaX, ((Meadow) world).SIZE - 1));
         yc = Math.max(0, Math.min(yc + deltaY, ((Meadow) world).SIZE - 1));
     }

@@ -1,10 +1,9 @@
 package greed;
 
-import simstation.*;
 import mvc.*;
+import simstation.*;
 
 public class GreedFactory extends SimStationFactory {
-
     @Override
     public Simulation makeModel() {
         return new GreedSimulation();
@@ -27,7 +26,7 @@ public class GreedFactory extends SimStationFactory {
                 "Press Pause to pause the simulation while its running.",
                 "Press Resume to resume the simulation after its been paused.",
                 "Press Stop to stop the simulation.",
-                "Press Stats to view the statistics of the simulation, returns number of alive cows"
+                "Press Stats to view the statistics of the simulation, returns # of alive cows and clock"
         };
     }
 

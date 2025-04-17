@@ -15,19 +15,29 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
         sliderPanel.setLayout(new BoxLayout(sliderPanel, BoxLayout.Y_AXIS));
 
         greedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, ((GreedSimulation) model).getGreed());
+        greedSlider.setMajorTickSpacing(10);
+        greedSlider.setMinorTickSpacing(5);
+        greedSlider.setPaintTicks(true);
+        greedSlider.setPaintLabels(true);
         greedSlider.addChangeListener(this);
 
         growBackRateSlider = new JSlider(JSlider.HORIZONTAL, 0, 10, ((Meadow) model).getGrowBackRate());
+        growBackRateSlider.setMajorTickSpacing(2);
+        growBackRateSlider.setPaintTicks(true);
+        growBackRateSlider.setPaintLabels(true);
         growBackRateSlider.addChangeListener(this);
 
         moveEnergySlider = new JSlider(JSlider.HORIZONTAL, 0, 50, ((Meadow) model).getMoveEnergy());
+        moveEnergySlider.setMajorTickSpacing(10);
+        moveEnergySlider.setMinorTickSpacing(5);
+        moveEnergySlider.setPaintTicks(true);
+        moveEnergySlider.setPaintLabels(true);
         moveEnergySlider.addChangeListener(this);
 
         sliderPanel.add(addSliderLabel("Greed:", greedSlider));
         sliderPanel.add(addSliderLabel("Grow Back Rate:", growBackRateSlider));
         sliderPanel.add(addSliderLabel("Move Energy:", moveEnergySlider));
 
-        // Fix missing buttons
         JButton startButton = new JButton("Start");
         startButton.addActionListener(e -> new StartCommand(model).execute());
 
@@ -43,16 +53,7 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
         JButton statsButton = new JButton("Stats");
         statsButton.addActionListener(e -> new StatsCommand(model).execute());
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 5));
-        buttonPanel.add(startButton);
-        buttonPanel.add(suspendButton);
-        buttonPanel.add(resumeButton);
-        buttonPanel.add(stopButton);
-        buttonPanel.add(statsButton);
-
         controlPanel.add(sliderPanel, BorderLayout.NORTH);
-        controlPanel.add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private JPanel addSliderLabel(String labelText, JSlider slider) {
@@ -66,11 +67,9 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        // Cast model to GreedSimulation
         GreedSimulation greedSimulation = (GreedSimulation) model;
 
         if(e.getSource() == greedSlider) {
-            // Use the instance method to set greed value
             greedSimulation.setGreed(greedSlider.getValue());
         } else if(e.getSource() == growBackRateSlider) {
             ((Meadow)model).setGrowBackRate(growBackRateSlider.getValue());
@@ -83,10 +82,9 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
     @Override
     public void update() {
         super.update();
-        // Cast model to GreedSimulation to access instance method getGreed()
         GreedSimulation greedSimulation = (GreedSimulation) model;
 
-        greedSlider.setValue(greedSimulation.getGreed()); // Use the instance method to get greed value
+        greedSlider.setValue(greedSimulation.getGreed());
         growBackRateSlider.setValue(((Meadow)model).getGrowBackRate());
         moveEnergySlider.setValue(((Meadow)model).getMoveEnergy());
     }
