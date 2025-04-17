@@ -1,8 +1,10 @@
 package greed;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.event.*;
+import mvc.Command;
 import simstation.*;
 
 public class GreedPanel extends SimulationPanel implements ChangeListener {
@@ -38,21 +40,6 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
         sliderPanel.add(addSliderLabel("Grow Back Rate:", growBackRateSlider));
         sliderPanel.add(addSliderLabel("Move Energy:", moveEnergySlider));
 
-        JButton startButton = new JButton("Start");
-        startButton.addActionListener(e -> new StartCommand(model).execute());
-
-        JButton suspendButton = new JButton("Pause");
-        suspendButton.addActionListener(e -> new SuspendCommand(model).execute());
-
-        JButton resumeButton = new JButton("Resume");
-        resumeButton.addActionListener(e -> new ResumeCommand(model).execute());
-
-        JButton stopButton = new JButton("Stop");
-        stopButton.addActionListener(e -> new StopCommand(model).execute());
-
-        JButton statsButton = new JButton("Stats");
-        statsButton.addActionListener(e -> new StatsCommand(model).execute());
-
         controlPanel.add(sliderPanel, BorderLayout.NORTH);
     }
 
@@ -77,6 +64,20 @@ public class GreedPanel extends SimulationPanel implements ChangeListener {
             ((Meadow)model).setMoveEnergy(moveEnergySlider.getValue());
         }
         model.changed();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getActionCommand().equals("Stats")) {
+            GreedFactory newFactory = (GreedFactory) factory;
+            Command statsCmd = newFactory.makeEditCommand(model, "Stats", null);
+            try {
+                statsCmd.execute();
+            } catch(Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+        else super.actionPerformed(e);
     }
 
     @Override

@@ -6,7 +6,7 @@ public class Meadow extends Simulation {
     private int waitPenalty = 5;
     private int moveEnergy = 10;
     private int numCows = 50;
-    public static final int SIZE = 600;
+    public static final int SIZE = 500;
     private int patchSize = 10;
     private int dim = SIZE / patchSize;
     private int growBackRate = 1;
@@ -43,6 +43,11 @@ public class Meadow extends Simulation {
         }
         return null;
     }
+
+    public int getDim() {
+        return dim;
+    }
+    
 
     @Override
     public void populate() {

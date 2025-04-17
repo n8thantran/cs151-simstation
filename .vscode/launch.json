@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GreedSimulation",
+            "request": "launch",
+            "mainClass": "greed.GreedSimulation",
+            "projectName": "cs151-simstation_d555820f"
+        },
+        {
+            "type": "java",
             "name": "PrisonerSim",
             "request": "launch",
             "mainClass": "prisoner.PrisonerSim",

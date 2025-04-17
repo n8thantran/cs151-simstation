@@ -1,5 +1,6 @@
 package greed;
 
+import javax.swing.JSlider;
 import mvc.*;
 import simstation.*;
 
@@ -12,6 +13,11 @@ public class GreedFactory extends SimStationFactory {
     @Override
     public GreedView makeView(Model m) {
         return new GreedView(m);
+    }
+    @Override
+    public String[] getEditCommands() {
+        return new String[]{"Start", "Suspend", "Resume", "Stop", "Stats",
+                "Greed", "Grow Back Rate", "Move Energy"};
     }
 
     @Override
@@ -35,14 +41,84 @@ public class GreedFactory extends SimStationFactory {
         return "Greed";
     }
 
-    public Command[] getCommands() {
-        Simulation model = makeModel();
-        return new Command[] {
-                new StartCommand(model),
-                new SuspendCommand(model),
-                new ResumeCommand(model),
-                new StopCommand(model),
-                new StatsCommand(model)
-        };
+    class SetGreed extends Command {
+        Integer value = null;
+        public SetGreed(Model model) { super(model); }
+        @Override
+        public void execute() {
+            if (value == null) {
+                String resp = Utilities.ask("Greediness = ?");
+                value = Integer.valueOf(resp);
+            }
+            ((GreedSimulation)model).setGreed(value);
+        }
+    }
+
+    class SetGrowBackRate extends Command {
+        Integer value = null;
+        public SetGrowBackRate(Model model) { super(model); }
+        @Override
+        public void execute() {
+            if (value == null) {
+                String resp = Utilities.ask("Grow Back Rate = ?");
+                value = Integer.valueOf(resp);
+            }
+            ((Meadow)model).setGrowBackRate(value);
+        }
+    }
+
+    class SetMoveEnergy extends Command {
+        Integer value = null;
+        public SetMoveEnergy(Model model) { super(model); }
+        @Override
+        public void execute(){
+            if (value == null) {
+                String resp = Utilities.ask("Move Energy Cost = ?");
+                value = Integer.valueOf(resp);
+            }
+            ((Meadow)model).setMoveEnergy(value);
+        }
+    }
+
+    class GreedStatsCommand extends StatsCommand {
+        public GreedStatsCommand(Model model) {
+            super(model);
+        }
+        @Override
+        protected String[] stats() {
+            GreedSimulation simulation = (GreedSimulation) model;
+            String aliveCows = simulation.getStats();
+            return new String[]{"Alive Cows: " + aliveCows, "Clock: " + simulation.getClock()};
+        }
+    }
+
+    @Override
+    public Command makeEditCommand(Model model, String type, Object source) {
+        Command cmd = super.makeEditCommand(model, type, source);
+        if (cmd == null || type.equals("Stats")) {
+            switch(type) {
+                case "Stats":
+                    cmd = new GreedStatsCommand(model);
+                    break;
+                case "Greed":
+                    cmd = new SetGreed(model);
+                    if (source instanceof JSlider)
+                        ((SetGreed)cmd).value = ((JSlider)source).getValue();
+                    break;
+
+                case "Grow Back Rate":
+                    cmd = new SetGrowBackRate(model);
+                    if (source instanceof JSlider)
+                        ((SetGrowBackRate)cmd).value = ((JSlider)source).getValue();
+                    break;
+
+                case "Move Energy":
+                    cmd = new SetMoveEnergy(model);
+                    if (source instanceof JSlider)
+                        ((SetMoveEnergy)cmd).value = ((JSlider)source).getValue();
+                    break;
+            }
+        }
+        return cmd;
     }
 }
