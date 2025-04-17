@@ -1,7 +1,7 @@
 package greed;
 
-import simstation.*;
 import mvc.*;
+import simstation.*;
 
 public class GreedFactory extends SimStationFactory {
     @Override

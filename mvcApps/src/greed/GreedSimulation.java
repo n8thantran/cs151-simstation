@@ -1,7 +1,7 @@
 package greed;
 
-import mvc.*;
 import javax.swing.SwingUtilities;
+import mvc.*;
 
 public class GreedSimulation extends Meadow {
     private int greediness = 25;

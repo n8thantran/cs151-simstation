@@ -1,8 +1,8 @@
 package greed;
 
-import simstation.*;
-import mvc.*;
 import java.awt.*;
+import mvc.*;
+import simstation.*;
 
 public class Cow extends MobileAgent {
     private int energy = 100;
